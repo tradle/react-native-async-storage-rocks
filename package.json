@@ -1,0 +1,8 @@
+{
+  "name": "react-native-async-storage-rocks",
+  "version": "1.0.0",
+  "description": "React Native RocksDB-based AsyncStorage backend",
+  "main": "index.js",
+  "author": "Mark Vayngrib <mark@tradle.io> (http://github.com/mvayngrib)",
+  "license": "MIT"
+}
