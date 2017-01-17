@@ -4,5 +4,10 @@
   "description": "React Native RocksDB-based AsyncStorage backend",
   "main": "index.js",
   "author": "Mark Vayngrib <mark@tradle.io> (http://github.com/mvayngrib)",
-  "license": "MIT"
+  "license": "MIT",
+  "keywords": [
+    "react-native",
+    "react-component",
+    "react"
+  ]
 }
