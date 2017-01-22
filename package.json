@@ -5,9 +5,14 @@
   "main": "index.js",
   "author": "Mark Vayngrib <mark@tradle.io> (http://github.com/mvayngrib)",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tradle/react-native-async-storage-rocks"
+  },
   "keywords": [
     "react-native",
     "react-component",
-    "react"
+    "react",
+    "ios"
   ]
 }
