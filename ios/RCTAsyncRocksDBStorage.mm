@@ -272,6 +272,29 @@ RCT_EXPORT_METHOD(clear:(RCTResponseSenderBlock)callback)
     }
 }
 
+RCT_EXPORT_METHOD(getAllKeysWithPrefix:(NSString*) prefix callback:(RCTResponseSenderBlock)callback)
+{
+  NSError *error;
+  NSMutableArray *keys = [NSMutableArray new];
+  NSInteger prefixLength = [prefix length];
+  NSDictionary *errorOut;
+  BOOL success = [self ensureDirectorySetup:&error];
+  if (!success || error) {
+    errorOut = RCTMakeError(@"Failed to setup storage", nil, nil);
+  } else {
+    rocksdb::Iterator *it = _db->NewIterator(rocksdb::ReadOptions());
+    rocksdb::Slice start = [prefix UTF8String];
+    for (it->Seek(start); it->Valid() && it->key().starts_with(start); it->Next()) {
+      std::string rawKey = it->key().ToString();// [NSString stringWithUTF8String:chars];
+      NSString* key = [[NSString stringWithFormat:@"%s", rawKey.c_str()] substringFromIndex:prefixLength];
+      [keys addObject:key];
+    }
+  }
+  if (callback) {
+    callback(@[errorOut ?: [NSNull null], keys]);
+  }
+}
+
 RCT_EXPORT_METHOD(getAllKeys:(RCTResponseSenderBlock)callback)
 {
     NSError *error;
