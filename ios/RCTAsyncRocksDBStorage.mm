@@ -283,7 +283,7 @@ RCT_EXPORT_METHOD(getAllKeysWithPrefix:(NSString*) prefix callback:(RCTResponseS
     errorOut = RCTMakeError(@"Failed to setup storage", nil, nil);
   } else {
     rocksdb::Iterator *it = _db->NewIterator(rocksdb::ReadOptions());
-    rocksdb::Slice start = [prefix UTF8String];
+    rocksdb::Slice start = SliceFromString(prefix);
     for (it->Seek(start); it->Valid() && it->key().starts_with(start); it->Next()) {
       std::string rawKey = it->key().ToString();// [NSString stringWithUTF8String:chars];
       NSString* key = [[NSString stringWithFormat:@"%s", rawKey.c_str()] substringFromIndex:prefixLength];
@@ -305,8 +305,8 @@ RCT_EXPORT_METHOD(getAllKeysInRange:(NSString*) lte gte:(NSString*) gte callback
     errorOut = RCTMakeError(@"Failed to setup storage", nil, nil);
   } else {
     rocksdb::Iterator *it = _db->NewIterator(rocksdb::ReadOptions());
-    rocksdb::Slice start = [lte UTF8String];
-    rocksdb::Slice end = [gte UTF8String];
+    rocksdb::Slice start = SliceFromString(lte);
+    rocksdb::Slice end = SliceFromString(gte);
     for (it->Seek(start); it->Valid() && it->key().compare(end) <= 0; it->Next()) {
       std::string rawKey = it->key().ToString();// [NSString stringWithUTF8String:chars];
       NSString* key = [NSString stringWithFormat:@"%s", rawKey.c_str()];
